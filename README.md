@@ -8,6 +8,7 @@
 - Python 版本的加密逻辑（不含隐写加载器）**s模式无需任何第三方库**，仅依赖 Python 标准库（`os`, `zlib`, `hashlib`, `hmac`, `argparse`, `tkinter` 等），开箱即用，a模式（AES-128-CTR）和c模式（ChaCha20）需要pycryptodome额外库。
 - **⚠️ 已知问题**：早期版本（v1~v4）中，**若加密时不勾选压缩（`compress=False`），生成的加密文件将无法解密**。此 bug 已在 v7 及以后版本修复（强制启用压缩）。因此请务必使用 v7+ 版本，或始终开启压缩。
 - **C 库版本**：提供标准版和混淆版两种源码（功能相同，混淆版用于代码保护），并附带一个 **Python GUI 封装程序**（`加密10动态库gui版.py`），可直接调用 C 动态库进行加解密，适合安卓 Pydroid 3 环境。
+- 推荐加密文件大小不超过50mb否则可能时间过长
 ## ✨ 核心特性
 
 - **跨平台**：Python 版支持 Windows / Linux / Android（Termux / Pydroid 3），C 库版支持 Linux / Android。
