@@ -19,16 +19,14 @@
     #endif
 #endif
 
-/* ---------- 加密模式常量 ----------
- * 注意：本库C语言版本不支持Windows系统仅支持安卓和Linux
- * 实现方式为非标准 AES/ChaCha20，而是基于 zlib 压缩 + Unicode 编码。
- * 支持两种文本编码模式：
- *   "zc" : 将每个字节拆分为高/低四位，映射到 U+0300 起始的符号
- *   "zh" : 将每个字节直接映射到 U+4E00 起始的汉字
- * 加密时请选择 "zc" 或 "zh"。
- */
-#define UNICRYPTO_MODE_ZC   "zc"
-#define UNICRYPTO_MODE_ZH   "zh"
+/* ---------- 编码模式常量 ---------- */
+#define UNICRYPTO_MODE_ZC   "zc"   /* Base-112符号映射 */
+#define UNICRYPTO_MODE_ZH   "zh"   /* 汉字映射 */
+
+/* ---------- 算法常量 ---------- */
+#define UNICRYPTO_ALGO_SHA   's'   /* SHA256+HMAC流加密（默认） */
+#define UNICRYPTO_ALGO_AES   'a'   /* AES-128-CTR */
+#define UNICRYPTO_ALGO_CHACHA 'c'  /* ChaCha20 */
 
 #ifdef __cplusplus
 extern "C" {
@@ -51,11 +49,12 @@ typedef enum {
 /* 获取错误描述（线程安全，返回静态字符串） */
 UNICRYPTO_API const char* unicrypto_strerror(unicrypto_error_t err);
 
-/* 文件加解密 */
+/* 文件加解密（新增算法参数 algo，可选 's', 'a', 'c'） */
 UNICRYPTO_API unicrypto_error_t unicrypto_encrypt_file(const char *in_path,
                                                         const char *out_path,
                                                         const char *password,
-                                                        const char *mode);
+                                                        const char *mode,
+                                                        char algo);
 
 /* @param ignore_magic: 0=校验魔数(默认), 1=跳过校验(强制解密) */
 UNICRYPTO_API unicrypto_error_t unicrypto_decrypt_file(const char *in_path,
@@ -63,13 +62,14 @@ UNICRYPTO_API unicrypto_error_t unicrypto_decrypt_file(const char *in_path,
                                                         const char *password,
                                                         int ignore_magic);
 
-/* 内存加解密（注意：output 由库内分配，调用者需使用 unicrypto_free() 释放） */
+/* 内存加解密（新增算法参数 algo） */
 UNICRYPTO_API unicrypto_error_t unicrypto_encrypt_buf(const unsigned char *input,
                                                        size_t input_len,
                                                        unsigned char **output,
                                                        size_t *output_len,
                                                        const char *password,
-                                                       const char *mode);
+                                                       const char *mode,
+                                                       char algo);
 
 UNICRYPTO_API unicrypto_error_t unicrypto_decrypt_buf(const unsigned char *input,
                                                        size_t input_len,
