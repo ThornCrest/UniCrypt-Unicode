@@ -20,5 +20,5 @@
   为安卓四大平台（arm64-v8a, armeabi-v7a, x86, x86_64）预编译好的动态库（`.so`），可直接在 Pydroid 3 或其他安卓 Python 环境中调用。
 
 > 💡 **快速上手**：  
-> - 纯 Python 用户：使用 `/python/v10_encrypt.py`（稳定版）。  
+> - 纯 Python 用户：使用 `/python/UC加密10.py`（稳定版）。  
 > - 想使用 C 库加速：编译 `/c_source/` 中的源码，或直接使用 `/c_libs/` 中的预编译库，再运行 `加密10动态库gui版.py` 即可获得图形界面。
