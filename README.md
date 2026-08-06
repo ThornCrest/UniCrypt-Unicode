@@ -19,17 +19,15 @@
 ## ✨ 核心特性
 
 - **跨平台**：Python 版支持 Windows / Linux / Android（Termux / Pydroid 3），C 库版支持 Linux / Android。
-- **零依赖（SHA256 模式）**：v10 及 v11 的 SHA256 模式仅依赖 Python 标准库，无需安装任何第三方包。
-- **多算法支持（v11 新特性）**：
-  - `SHA256`（默认）—— 原版 HMAC-SHA256 密钥流，无需额外库。
-  - `AES-128-CTR` —— 需安装 `pycryptodome`。
-  - `ChaCha20` —— 需安装 `pycryptodome`。
+- **零依赖（SHA256 模式）**：v12 的 SHA256 模式仅依赖 Python 标准库，无需安装任何第三方包。
+- **PBKDF2次数可调（v12 新特性）**：
+  🔐 PBKDF2 迭代次数可调：支持自定义 PBKDF2 迭代次数（--iter 参数），范围 1000 ~ 99,999,999。头部自动写入迭代标记（pb=T/F+8位数字），解密时无需手动输入，自动识别。
 - **两种编码模式**：
   - `zc` —— Base-112 编码到 U+0300~U+036F（兼容性优先）。
   - `zh` —— 汉字编码到 U+4E00~U+4EFF（压缩比优先）。
 - **流式处理**：支持超大文件（>4GB），内存占用恒定（64KB 缓冲区）。
 - **身份验证**：HMAC-SHA256 签名防篡改，解密时自动校验。
-- **向下兼容**：v11 可解密 v10 及更早版本生成的加密文件。
+- **向下兼容**：v112 可解密 v11 v10 版本生成的加密文件。
 - 📦 依赖说明
 
 版本 算法 依赖
@@ -37,7 +35,7 @@ v10 及更早 SHA256 无（仅 Python 标准库）
 v11 SHA256（默认） 无（仅 Python 标准库）
 v11 AES-128-CTR pycryptodome（pip install pycryptodome）
 v11 ChaCha20 pycryptodome（pip install pycryptodome）
-
+v12 同v11
 GUI 模式（--gui）需 tkinter（通常 Python 自带）。
 v5/v6 隐写加载器需 Pillow 和 requests（仅限特殊用途）。
 ## 📁 文件夹分布
